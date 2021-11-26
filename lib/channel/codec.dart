@@ -50,13 +50,13 @@ class _Codec {
   }
 
   static Map<String, dynamic> platformSpecificMap({
-    @required Map<String, dynamic> android,
-    @required Map<String, dynamic> ios,
+    @required Map<String, dynamic>? android,
+    @required Map<String, dynamic>? ios,
   }) {
     if (Platform.isAndroid) {
-      return android;
+      return android!;
     } else if (Platform.isIOS) {
-      return ios;
+      return ios!;
     } else {
       throw new GeolocationException(
           'Unsupported platform: ${Platform.operatingSystem}');
@@ -68,10 +68,13 @@ class _JsonCodec {
   static GeolocationResult resultFromJson(Map<String, dynamic> json) =>
       new GeolocationResult._(
         json['isSuccessful'],
-        json['error'] != null ? resultErrorFromJson(json['error']) : null,
+        resultErrorFromJson(json['error'] ?? {
+          'type' : 'runtime',
+          'playServices' : 'runtime'
+        })! ,
       );
 
-  static GeolocationResultError resultErrorFromJson(Map<String, dynamic> json) {
+  static GeolocationResultError? resultErrorFromJson(Map<String, dynamic> json) {
     final GeolocationResultErrorType type =
         _mapResultErrorTypeJson(json['type']);
 
@@ -100,15 +103,16 @@ class _JsonCodec {
   static LocationResult locationResultFromJson(Map<String, dynamic> json) =>
       new LocationResult._(
         json['isSuccessful'],
-        json['error'] != null ? resultErrorFromJson(json['error']) : null,
-        json['data'] != null
-            ? (json['data'] as List<dynamic>)
-                .map((it) => locationFromJson(it as Map<String, dynamic>))
-                .toList()
-            : null,
+        resultErrorFromJson(json['error'] ?? {
+          'type' : 'runtime',
+          'playServices' : 'runtime'
+        })!,
+        ( ((json['data'] ?? []) as List<dynamic>)
+                .map((it) => locationFromJson(it as Map<String, dynamic>)!)
+                .toList()),
       );
 
-  static Location locationFromJson(Map<String, dynamic> json) => new Location._(
+  static Location? locationFromJson(Map<String, dynamic> json) => new Location._(
         _Codec.parseJsonNumber(json['latitude']),
         _Codec.parseJsonNumber(json['longitude']),
         _Codec.parseJsonNumber(json['altitude']),

@@ -78,17 +78,17 @@ class _LocationChannel {
   // can start the location request if it's the first subscription or update ongoing request with new params if needed
   Stream<LocationResult> locationUpdates(_LocationUpdatesRequest request) {
     // The stream that will be returned for the current updates request
-    StreamController<LocationResult> controller;
-    _LocationUpdatesSubscription subscription;
+     StreamController<LocationResult>? controller;
+    _LocationUpdatesSubscription? subscription;
 
     final StreamSubscription<LocationResult> updatesSubscription =
         _updatesStream.listen((LocationResult result) {
       // Forward channel stream location result to subscription
-      controller.add(result);
+      controller!.add(result);
 
       // [_LocationUpdateStrategy.current] and [_LocationUpdateStrategy.single] only get a single result, then closes
       if (request.strategy != _LocationUpdateStrategy.continuous) {
-        subscription.subscription.cancel();
+        subscription!.subscription.cancel();
         _updatesSubscriptions.remove(subscription);
         controller.close();
       }
@@ -105,14 +105,14 @@ class _LocationChannel {
         1;
 
     subscription = new _LocationUpdatesSubscription(
-      request.id,
+      request.id!,
       updatesSubscription,
     );
     _updatesSubscriptions.add(subscription);
 
     controller = new StreamController<LocationResult>.broadcast(
       onListen: () {
-        _log('add location updates [id=${subscription.requestId}]');
+        _log('add location updates [id=${subscription!.requestId}]');
         _invokeChannelMethod(
           _loggingTag,
           _channel,
@@ -121,7 +121,7 @@ class _LocationChannel {
         );
       },
       onCancel: () {
-        _log('remove location updates [id=${subscription.requestId}]');
+        _log('remove location updates [id=${subscription!.requestId}]');
         subscription.subscription.cancel();
         _updatesSubscriptions.remove(subscription);
 

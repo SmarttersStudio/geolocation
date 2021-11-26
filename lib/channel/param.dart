@@ -16,7 +16,7 @@ class _LocationUpdatesRequest {
     assert(displacementFilter >= 0.0);
   }
 
-  int id;
+  int? id;
   final _LocationUpdateStrategy strategy;
   final LocationPermission permission;
   final LocationAccuracy accuracy;
@@ -34,5 +34,5 @@ class _PermissionRequest {
     @required this.openSettingsIfDenied,
   });
   final LocationPermission value;
-  final bool openSettingsIfDenied;
+  final bool? openSettingsIfDenied;
 }

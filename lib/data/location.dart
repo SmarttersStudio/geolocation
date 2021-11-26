@@ -38,8 +38,8 @@ class LocationAccuracy {
   /// using specific platform values.
   const LocationAccuracy({@required this.android, @required this.ios});
 
-  final LocationPriorityAndroid android;
-  final LocationAccuracyIOS ios;
+  final LocationPriorityAndroid? android;
+  final LocationAccuracyIOS? ios;
 
   /// Low accuracy that can locate the device accurately to within several kilometers.
   static const LocationAccuracy city = const LocationAccuracy(

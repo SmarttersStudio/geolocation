@@ -10,6 +10,7 @@ Future<String> _invokeChannelMethod(
   String data;
   try {
     data = await channel.invokeMethod(method, arguments);
+    return data;
   } catch (exception, stack) {
     FlutterError.reportError(new FlutterErrorDetails(
       exception: exception,
@@ -18,8 +19,8 @@ Future<String> _invokeChannelMethod(
       context:
           DiagnosticsNode.message('while invoking ${channel.name}/$method'),
     ));
+    return '';
   }
 
-  _log(data, tag: tag);
-  return data;
+  // _log(data, tag: tag);
 }

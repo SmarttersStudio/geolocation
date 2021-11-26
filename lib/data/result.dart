@@ -63,7 +63,7 @@ class GeolocationResultError {
         return 'play services -> $additionalInfo';
       default:
         assert(false);
-        return null;
+        return '';
     }
   }
 }
@@ -94,6 +94,6 @@ GeolocationResultErrorType _mapResultErrorTypeJson(String jsonValue) {
     default:
       assert(
           false, 'cannot parse json to GeolocationResultErrorType: $jsonValue');
-      return null;
+      return GeolocationResultErrorType.runtime;
   }
 }

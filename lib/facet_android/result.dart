@@ -26,6 +26,6 @@ GeolocationAndroidPlayServices _mapPlayServicesJson(String jsonValue) {
     default:
       assert(false,
           'cannot parse json to GeolocationAndroidPlayServices: $jsonValue');
-      return null;
+      return GeolocationAndroidPlayServices.invalid;
   }
 }
