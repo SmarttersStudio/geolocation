@@ -78,9 +78,11 @@ class _MyAppState extends State<MyApp> {
 
   enableLocationServices() async {
     Geolocation.enableLocationServices().then((result) {
+      print(result);
       // Request location
     }).catchError((e) {
       // Location Services Enablind Cancelled
+      print(e.toString());
     });
   }
 }

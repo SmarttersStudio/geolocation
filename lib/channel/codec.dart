@@ -89,7 +89,7 @@ class _JsonCodec {
 
     final GeolocationResultError error = new GeolocationResultError._(
       type,
-      json['message'],
+      json['message'] ?? '',
       additionalInfo,
     );
 
